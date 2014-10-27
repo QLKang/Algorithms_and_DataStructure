@@ -1,0 +1,67 @@
+package com.test2.kql;
+
+class Node {
+	int data;
+	Node next;
+
+	public Node(int d) {
+		data = d;
+	}
+
+	void appendToTail(int x) {
+		Node n = new Node(x);
+		Node current = this;
+		while (current.next != null) {
+			current = current.next;
+		}
+		current.next = n;
+	}
+}
+
+public class PartitionString {
+
+	Node partition(Node head, int x) {
+		if (head == null)
+			return null;
+		Node before = null;
+		Node after = null;
+		Node current = head;
+		Node currNext = current.next;
+		Node p = new Node(x);
+		while (currNext != null) {
+			if (current.data < x) {
+				if (before == null) {
+					before = p;
+				}
+				current.next = before;
+				before = current;
+			} else {
+				current.next = after;
+				after = current;
+			}
+			current = currNext;
+			currNext = current.next;
+		}
+		p.next = after;
+		return before;// ..........
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Node head = new Node(2);
+		head.appendToTail(12);
+		head.appendToTail(4);
+		head.appendToTail(5);
+		head.appendToTail(10);
+		head.appendToTail(8);
+		int x = 9;
+		PartitionString ps = new PartitionString();
+		Node ll = ps.partition(head, x);
+		Node current = ll;
+		while (current != null) {
+			System.out.print(current.data + " ");
+			current = current.next;
+		}
+	}
+
+}

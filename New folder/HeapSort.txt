@@ -1,0 +1,94 @@
+package kql.test.practise;
+/* heap sort: 
+ * 1. maxHeapify(arr, i, size): arr is the input array, i is the index whose corresponding value will be max heapify, size is the part of array that will be used to max heapify
+ * 2. maxHeap(arr, size):	build a max heap whose size is size
+ * 3. heapSort(arr):		sort arr
+ * 4. shift(arr, i, j):		arr is input arr, i and j is the corresponding index of elements which will be shift
+ * input:arr={ 16 14 10 8 7 9 3 2 4 1 }
+ *          16                                                           
+ *        /     \                                                         
+ *      14      10
+ *     /  \    /  \                                               
+ *    8    7  9    3                                                      
+ *   / \  /   
+ *  2   4 1                    
+ *  
+ * output: arr={ 1 2 3 4 7 8 9 10 14 16 }   
+ *           1                                                           
+ *                                                             
+ *       2      3
+ *                                                 
+ *    4    7  8    9                                                      
+ *     
+ *  10 14 16                       
+ */
+public class HeapSort {
+
+	// ----maxHeapify()---------------------------------------------------------------
+	void maxHeapify(int[] arr, int i, int size) {
+		if (arr.length <= 0)
+			return;
+//		int size = arr.length; // 2i+1 should less than or equal to size!!!
+		if (i < 0 || i > size - 1)
+			return;
+
+		int left = 2 * i + 1;
+		int right = 2 * i + 2;
+		int large = i; // large, left, right are indexes.
+		if (left <= size-1 && arr[large] < arr[left]) {
+			large = left;
+		}
+		if (right <= size-1 && arr[large] < arr[right]) {
+			large = right;
+		}
+		if (large != i) { // if large == i, it will be a dead loop
+			shift(arr, large, i);
+			maxHeapify(arr, large, size);
+		}
+	}
+
+// exchange the arr[large] and arr[i], not change the index large and i, so after exchanging the large index's location will not be changed
+	void shift(int[] arr, int i, int j) {
+		int temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+
+	}
+
+	// ---------build max heap-------------------------------
+	void maxHeap(int[] arr, int size) {
+		if (arr.length <= 0)
+			return;
+//		int size = arr.length;
+		int hf = (size - 2) / 2;
+		for (int i = hf; i >= 0; i--) {
+			maxHeapify(arr, i, size);
+		}
+	}
+	//------------heap sort-------------------------------
+	void heapSort(int[] arr){
+		if(arr.length <= 0)
+			return;
+		int s = arr.length;
+		while(s!=1){
+//			arr.length = arr.length-1;
+			maxHeap(arr, s);
+			shift(arr, 0, s-1);
+			s--;
+		}
+	}
+	
+	// ----------for test--------------------
+	public static void main(String[] args) {
+		int[] arr = { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7 };
+		HeapSort hs = new HeapSort();
+	
+		// test heap sort
+		hs.heapSort(arr);
+		for(Integer j: arr){
+			System.out.print(j+" ");
+		}
+		
+	}
+
+}

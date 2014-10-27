@@ -1,0 +1,74 @@
+package com.test2.kql;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+public class Test {
+
+	public static void main(String[] args) {
+		LinkedList<Character> ll = new LinkedList<Character>();
+		ll.add('A');
+		ll.add('B');
+		ll.add('C');
+		ll.add('D');
+		ll.add('E');
+		ll.add('F');
+		ll.add('G');
+		ll.add('H');
+		ll.add('I');
+		ll.add('J');
+		System.out.println("LinkedList is flexible: ");
+		for (int i = 0; i < ll.size(); i++) {
+			System.out.print("(" + i + ": " + ll.get(i) + ")  ");
+		}
+		System.out.println();
+		ll.remove(4);
+		ll.remove(7);
+		for (int i = 0; i < ll.size(); i++) {
+			System.out.print("(" + i + ": " + ll.get(i) + ")  ");
+		}
+
+		ArrayList<Character> arr = new ArrayList<Character>();
+		arr.add('A');
+		arr.add('B');
+		arr.add('C');
+		arr.add('D');
+		arr.add('E');
+		arr.add('F');
+		arr.add('G');
+		arr.add('H');
+		arr.add('I');
+		arr.add('J');
+		System.out.println("\n\nArrayList is flexible: ");
+		for (int i = 0; i < arr.size(); i++) {
+			System.out.print("(" + i + ": " + arr.get(i) + ")  ");
+		}
+		System.out.println();
+		arr.remove(4);
+		arr.remove(7);
+		for (int i = 0; i < arr.size(); i++) {
+			System.out.print("(" + i + ": " + arr.get(i) + ")  ");
+		}
+
+	}
+
+}
+
+/* Output: 
+LinkedList is flexible: 
+(0: A)  (1: B)  (2: C)  (3: D)  (4: E)  (5: F)  (6: G)  (7: H)  (8: I)  (9: J)  
+(0: A)  (1: B)  (2: C)  (3: D)  (4: F)  (5: G)  (6: H)  (7: J)  
+
+ArrayList is flexible: 
+(0: A)  (1: B)  (2: C)  (3: D)  (4: E)  (5: F)  (6: G)  (7: H)  (8: I)  (9: J)  
+(0: A)  (1: B)  (2: C)  (3: D)  (4: F)  (5: G)  (6: H)  (7: J)  
+
+*/
+
+
+
+
+
+
+
+

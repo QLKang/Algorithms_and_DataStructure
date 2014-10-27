@@ -1,0 +1,67 @@
+package com.test2.kql;
+/*
+ * I did not test it.
+ */
+import java.util.ArrayList;
+
+/*
+ * 9.2 
+ * Imagine a robot sitting on the upper left comer of an X by Y grid. 
+ * The robot can only move in two directions: right and down. How many 
+ * possible paths are there for the robot to go from (0, 0) to (X, Y) ?
+ * 
+ * FOLLOW UP
+ * Imagine certain spots are "off limits," such that the robot cannot 
+ * step on them. Design an algorithm to find a path for the robot from 
+ * the top left to the bottom right.
+ * 
+ */
+class Point {
+	int x;
+	int y;
+
+	public Point(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+}
+
+public class RobotMovePathsDP {
+	// follow up
+	ArrayList<Point> path = new ArrayList<Point>();
+
+	boolean getPath(int x, int y) {
+		boolean suc = false;
+		Point p = new Point(x, y);
+		path.add(p);
+
+		boolean temp1 = false;
+		boolean temp2 = false;
+
+		if (isFree(x - 1, y) && x >= 1) {
+
+			temp1 = getPath(x - 1, y);
+		}
+		if (isFree(x, y - 1) && y >= 1) {
+			temp2 = getPath(x, y - 1);
+		}
+		if (temp1 == true || temp2 == true) {
+			return true;
+
+		} else {
+			path.remove(p);
+			return false;
+		}
+		// return false; // ..........
+	}
+
+	// ...........
+	boolean isFree(int x, int y) {
+		return false;
+	}
+
+	// ----for test-----
+	public static void main(String[] args) {
+
+	}
+}

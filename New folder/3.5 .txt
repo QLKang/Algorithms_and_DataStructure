@@ -1,0 +1,86 @@
+package kql.test.practise;
+/*
+ * 3.5 Implement a MyQueue class which implements a queue using two stacks.
+ */
+import java.util.Stack;
+
+public class Queue {
+
+	Stack<Integer> s1 = new Stack<Integer>();
+	Stack<Integer> s2 = new Stack<Integer>();
+	int cap;
+
+	public Queue(int c) {
+		cap = c;
+	}
+
+	void enq(int x) {
+		s1.push(x);
+	}
+
+	int deq() {
+		int d = 0;
+		if (s1.empty() && s2.empty())
+			throw new IllegalArgumentException("Empty.");
+		else if (s2.empty() && (!s1.empty())) {
+			transfer(s1, s2);
+			d = s2.pop();
+		} else if (!s2.empty()) {
+			d = s2.pop();
+		}
+		return d;
+	}
+
+	void transfer(Stack<Integer> s1, Stack<Integer> s2) {
+		while (!s1.empty()) {
+			s2.push(s1.pop());
+		}
+	}
+
+	public static void main(String[] args){
+		int capacity = 5;
+		Queue q = new Queue(capacity);
+		q.enq(1);
+		q.enq(2);
+		q.enq(3);
+		q.enq(4);
+		q.enq(5);
+		q.enq(6);
+		q.enq(7);
+		q.enq(8);
+		q.enq(9);
+		q.enq(10);
+		q.enq(11);
+		q.enq(12);
+		q.enq(13);
+		q.enq(14);
+
+		q.deq();
+		q.deq();
+		q.deq();
+		q.deq();
+		q.deq();
+		q.deq();
+		q.deq();
+	
+		q.enq(12);
+		q.enq(13);
+		q.enq(14);
+	
+		q.deq();
+		q.deq();
+		q.deq();
+		q.deq();
+		q.deq();
+		q.deq();
+		q.deq();
+	
+		q.deq();
+		q.deq();
+		q.deq();
+		q.deq();
+	}
+
+
+
+}

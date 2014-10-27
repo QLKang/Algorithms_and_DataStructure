@@ -1,0 +1,46 @@
+
+
+
+
+Stack<Integer>:	empty();
+
+// ------------ArrayList: lastIndexOf() example-------------------
+
+import java.util.ArrayList;
+
+public class ArrayListDemo {
+	public static void main(String[] args) {
+      
+	// create an empty array list with an initial capacity
+	ArrayList<String> arrlist = new ArrayList<String>(5);
+
+	// use add() method to add values in the list
+	arrlist.add("G");
+	arrlist.add("E");
+	arrlist.add("F");
+	arrlist.add("M");
+	arrlist.add("E");
+	System.out.println("Size of list: " + arrlist.size());
+
+    // let us print all the values available in list
+	for (String value : arrlist) {
+		System.out.println("Value = " + value);
+	}  
+
+    // Retrieving the index of last occurrence of element "E"
+	int retval=arrlist.lastIndexOf("E");
+	System.out.println("The last occurrence of E is at index " + retval);
+	}
+}   
+Let us compile and run the above program, this will produce the following result:
+
+Size of list: 5
+Value = G
+Value = E
+Value = F
+Value = M
+Value = E
+The last occurrence of E is at index 4
+//------------------------------------------------------------------
+
+

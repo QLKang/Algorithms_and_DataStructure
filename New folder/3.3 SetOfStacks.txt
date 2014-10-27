@@ -1,0 +1,302 @@
+public SetOfStacks{
+
+
+	public void push(int n){
+		Stack last = getLast(stacks);
+		if(last == null){
+			Stack<Integer> newstack = new Stack<Integer>();
+			newstack.push(int n);
+			stacks.add(newstack); 
+		}
+			
+		last.push(int n);
+	}
+
+	public int pop(){
+		Stack last = getLast(stacks);
+		if(last == null){
+			return null;
+		}
+		int pp = last.pop();
+		return pp;
+	}
+	public int peek(){
+		Stack last = getLast(stacks);
+		if(last == null){
+			return null;
+		}
+		int pk = last.peek();
+		return pk;
+	}
+
+	Stack<Integer> getLast(ArrayList<Stack<Integer> stacks>){
+		if(stacks.isEmpty())
+			return null;	
+		int lastId = stacks.lastIndexOf(stacks);
+		Stack lastStk = stacks.remove(lastId);
+		if(lastStk.empty())
+			stacks.remove(lastId);
+		return stk;
+	}
+
+	public static void main(String[] args){
+	
+	}	
+}	
+//----------------the above is horrible errors codes------------------------
+// pay more  attention to the details, try the best to avoid missing somethine which are not suppposed to be lost.
+
+e.g:	Stack<Integer>, donot forget "<>"
+	public class ....., Donot forget "class"
+
+/*
+ * Imagine a (literal) stack of plates. If the stack gets too high, it might topple.
+ * Therefore, in real life, we would likely start a new stack when the previous stack
+ * exceeds some threshold. Implement a data structure SetOf Stacks that mimics
+ * this. SetOf Stacks should be composed of several stacks and should create a
+ * new stack once the previous one exceeds capacity. SetOf Stacks. push() and
+ * SetOf Stacks. pop() should behave identically to a single stack (that is, pop()
+ * should return the same values as it would if there were just a single stack
+ * 
+ */
+/*------------------PartI first way----------------------------------------------------------*/
+package kql.test.practise;
+
+
+import java.util.ArrayList;
+import java.util.Stack;
+
+public class SetOfStacks {
+	int subSize = 0; // this the size of the sub stack
+
+	public SetOfStacks(int s) {
+		this.subSize = s;
+	}
+
+	public void push(ArrayList<Stack<Integer>> stacks, int n) {
+
+		Stack<Integer> last = getLast(stacks);
+		// if last is null, there is no element in the stacks, so the getLast()
+		// method will remove all the empty stack
+		// if last.size()==subSize, the last stack is full, we need to create a
+		// new substack
+
+		if (last == null || last.size() == subSize) {
+			Stack<Integer> newstack = new Stack<Integer>();
+			newstack.push(n);
+			stacks.add(newstack);
+		} else if (last.size() <= subSize) {
+			last.push(n);
+		}
+	}
+
+	public int pop(ArrayList<Stack<Integer>> stacks) {
+		Stack<Integer> last = getLast(stacks);
+		if (last == null) {
+			throw new IllegalArgumentException("the set of stacks are empty!");
+		}
+		int pp = last.pop();
+		return pp;
+	}
+
+	public int peek(ArrayList<Stack<Integer>> stacks) {
+		Stack<Integer> last = getLast(stacks);
+		if (last == null) {
+			throw new IllegalArgumentException("the set of stacks are empty");
+		}
+		int pk = last.peek();
+		return pk;
+	}
+
+	// return the last stack in the arraylist, if the arraylist is empty return
+	// null, if the last stack is empty, remove it and return the last stack
+	// until the last is not empty. If there are no elements in the arraylist
+	// but emtpy stack, it will return null finally.
+	Stack<Integer> getLast(ArrayList<Stack<Integer>> stacks) {
+		if (stacks.isEmpty())
+			return null;
+		while (!stacks.isEmpty()) {
+			int lastId = stacks.size() - 1;
+			Stack<Integer> lastStk = stacks.get(lastId);
+			if (lastStk.empty()) {
+				stacks.remove(lastId);
+			} else
+				return lastStk;
+		}
+		return null;
+	}
+
+	// the main method is for test
+	public static void main(String[] args) {
+		ArrayList<Stack<Integer>> stacks = new ArrayList<Stack<Integer>>();
+		int subSize = 5;
+		SetOfStacks ss = new SetOfStacks(subSize);
+		// create a set of stacks, the subSize is 5
+		ss.push(stacks, 0);
+		ss.push(stacks, 1);
+		ss.push(stacks, 2);
+		ss.push(stacks, 3);
+		ss.push(stacks, 4);
+		ss.push(stacks, 5);
+		ss.push(stacks, 6);
+		ss.push(stacks, 7);
+		ss.push(stacks, 8);
+
+		// for(Stack<Integer> stk: stacks){
+		// for(Integer i: stk){
+		// System.out.print(" "+i);
+		// }
+		// }
+		ss.pop(stacks);
+		ss.pop(stacks);
+		ss.pop(stacks);
+		ss.pop(stacks);
+		ss.pop(stacks);
+		ss.pop(stacks);
+		ss.pop(stacks);
+		ss.pop(stacks);
+		ss.pop(stacks);
+		ss.pop(stacks);
+		ss.pop(stacks);
+		ss.pop(stacks);
+		int pk = ss.peek(stacks);
+		System.out.println();
+		System.out.print("pk: " + pk);
+
+	}
+}
+
+
+
+
+
+
+/*---------PartII second way---------------------------------------------------*/
+
+
+//9:16 PM 1/19/2014
+//10:05 PM 1/19/2014
+/* Note: pay more attention to the stack = getLast(), since maybe stack==null, and the null variable could not use .isEmpty(), it is illegal
+ * 
+ * 
+ */
+package kql.test.practise;
+
+import java.util.ArrayList;
+
+class SetOfStacks {
+	// boundary condtion....... stacks is empty, stack is empty or full.
+	ArrayList<ArrayList<Integer>> stacks = new ArrayList<ArrayList<Integer>>();
+	int subSize = 0;
+
+	// constructor
+	public SetOfStacks(int n) {
+		subSize = n;
+	}
+
+	void push(int n) {
+		ArrayList<Integer> stack = getLast();
+		if (stack == null || isFull(stack)) { // if stack is null, that is the
+												// stacks is empty!!
+			ArrayList<Integer> newStack = new ArrayList<Integer>();
+			if (newStack.size() < subSize) {
+				newStack.add(n);
+			} else {
+				throw new IllegalArgumentException(
+						"subSize shoule be larger than 0. ");
+			}
+			stacks.add(newStack);
+		} else {
+			stack.add(n);
+		}
+	}
+
+	int pop() {
+		int pp = 0;
+		ArrayList<Integer> stack = getLast();// never be emtpy null
+		// stack is null but stack.size() may be one
+		if (stacks.isEmpty()) { // stack==null is a wrong expression.
+			throw new IllegalArgumentException(
+					"The SetOfStacks are emtpy and could not be popped up. ");
+		} else {
+			int stkSize = stack.size();
+			pp = stack.remove(stkSize - 1); // ///
+			if (stack.isEmpty()) {
+				stacks.remove(stacks.size() - 1);
+			}
+		}
+		return pp;
+	}
+
+	ArrayList<Integer> getLast() {
+		if (stacks.isEmpty()) {
+			return null;
+		}
+		int stksSize = stacks.size();
+		return stacks.get(stksSize - 1);
+	}
+
+	boolean isFull(ArrayList<Integer> stack) {
+		return (stack.size() == subSize);
+	}
+
+	// ------------------for test------------------
+	public static void main(String[] args) {
+		// ArrayList<ArrayList<Integer>> stks = new
+		// ArrayList<ArrayList<Integer>>();
+		int subSize = 5;
+		SetOfStacks stks = new SetOfStacks(subSize);
+		stks.push(1);
+		stks.push(2);
+		stks.push(3);
+		stks.push(4);
+		stks.push(5);
+
+		stks.push(6);
+		stks.push(7);
+		stks.push(8);
+		stks.push(9);
+		stks.push(10);
+		stks.push(11);
+
+		stks.pop();
+		stks.pop();
+		stks.pop();
+		stks.pop();
+		stks.pop();
+
+		stks.pop();
+		stks.pop();
+		stks.pop();
+		stks.pop();
+		stks.pop();
+
+		stks.pop();
+		stks.pop();
+
+	}
+
+} // end class 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

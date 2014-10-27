@@ -1,0 +1,89 @@
+package com.test2.kql;
+
+import java.util.ArrayList;
+import java.util.Stack;
+
+/*
+ * subsize: the size of sub stack
+ * stks: 	store the set of stacks
+ * getLastStk: get the last stack of stacks
+ * 
+ */
+public class SetOfStacks {
+	int subsize;
+
+	public SetOfStacks(int s) {
+		subsize = s;
+	}
+
+	ArrayList<Stack<Integer>> stks = new ArrayList<Stack<Integer>>();
+	Stack<Integer> stk = null;
+
+	void push(int x) {
+		if (stks.isEmpty()) {
+			stk = new Stack<Integer>();
+			stk.push(x);
+			stks.add(stk);
+		} else {
+			stk = getLastStk();
+			if (stk.size() == subsize) {
+				Stack<Integer> newstk = new Stack<Integer>();
+				newstk.push(x);
+				stks.add(newstk);
+			} else {
+				stk.push(x);
+			}
+		}
+	} // end push()
+
+	int pop() {
+		int pp = 0;
+		if (stks.isEmpty()) {
+			throw new IllegalArgumentException("stacks are empty.");
+		} else {
+			stk = getLastStk();
+			pp = stk.pop();
+			if (stk.isEmpty()) {
+				int size = stks.size();
+				stks.remove(size - 1);
+			}
+		}
+		return pp;
+	} // end pop()
+
+	Stack<Integer> getLastStk() {
+		int size = stks.size();
+		return stks.get(size - 1);
+	}
+
+	public static void main(String[] args) {
+		int subsize = 5;
+		SetOfStacks sos = new SetOfStacks(subsize);
+		
+		for(int i=0; i<13; i++ ){
+			sos.push(i);
+		}
+		System.out.println(sos.stks);
+		
+		sos.pop();
+		sos.pop();
+		sos.pop();
+		sos.pop();
+		sos.pop();
+		
+		sos.pop();
+		sos.pop();
+		sos.pop();
+		sos.pop();
+		sos.pop();
+		
+		sos.pop();
+		sos.pop();
+		sos.pop();
+		
+		sos.pop();
+		System.out.println(sos.stks);
+		
+	}
+
+}

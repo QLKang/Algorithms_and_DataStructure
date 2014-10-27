@@ -1,0 +1,60 @@
+package org.bridg.kang;
+
+class MergeSort {
+	int[] mergeSort(int[] A, int top, int end) {
+		if (A == null)
+			return null;
+		if (top < end) {
+			int mid = (top + end) / 2;
+			mergeSort(A, top, mid);
+			mergeSort(A, mid + 1, end);
+			merge(A, top, mid, end);
+		}
+		return A;
+	} // end mergeSort()
+
+	void merge(int[] A, int top, int mid, int end) {
+		int[] C = new int[mid - top + 1];
+		for (int i = 0; i < mid - top + 1; i++) {
+			C[i] = A[i];
+		}
+		int len1 = mid - top + 1;
+		int i = 0, j = mid + 1, cnt = top;
+		while (i != len1 - 1 && j != end + 1) {
+			if (C[i] < A[j]) {
+				A[cnt] = C[i];
+				i++;
+			} else {
+				A[cnt] = A[j];
+				j++;
+			}
+			cnt++;
+		}
+		if (j == end + 1) {
+			for (int k = i; k <= len1 - 1; k++) {
+				A[cnt] = C[k];
+				cnt++;
+			}
+		}
+	}
+
+	int[] mergeSort(int[] A) {
+		if (A == null)
+			return null;
+		int top = 0, end = A.length - 1;
+		return mergeSort(A, top, end);
+	}
+
+} // end MergeSort class
+
+/*----for test----*/
+public class MergeSortTest {
+	public static void main(String[] args) {
+		int[] A = {15, 2, 4, 6, 1, 3, 10, 12};
+		MergeSort ms = new MergeSort();
+		int[] sorted = ms.mergeSort(A);
+		for(int i=0; i<sorted.length-1; i++){
+			System.out.print(sorted[i]+"  ");
+		}
+	}
+}

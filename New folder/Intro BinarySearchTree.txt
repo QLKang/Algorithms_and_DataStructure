@@ -1,0 +1,14 @@
+About Binary Search Tree
+
+
+In computer science, a binary search tree (BST), sometimes also called an ordered or sorted binary tree, is a node-based binary tree data structure which has the following properties:[1]
+
+ 1. The left subtree of a node contains only nodes with keys less than the node's key.
+ 2. The right subtree of a node contains only nodes with keys greater than the node's key.
+ 3. The left and right subtree each must also be a binary search tree.
+ 4. There must be no duplicate nodes.
+
+Generally, the information represented by each node is a record rather than a single data element. However, for sequencing purposes, nodes are compared according to their keys rather than any part of their associated records.
+
+The major advantage of binary search trees over other data structures is that the related sorting algorithms and search algorithms such as in-order traversal can be very efficient.
+Binary search trees are a fundamental data structure used to construct more abstract data structures such as sets, multisets, and associative arrays.

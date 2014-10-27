@@ -1,0 +1,67 @@
+package kql.test.practise;
+
+/*
+4.5 Imp/emen t a function to check if a binary tree is a binary search tree.
+*/
+
+public class CheckBST {
+	
+	public static int last = Integer.MIN_VALUE;
+	public static boolean checkBST(TreeNode n){
+		if(n==null)
+			return true;
+		
+		if(!checkBST(n.left))
+			return false;
+		if(n.data < last)
+			return false;
+		last = n.data;
+		
+		if(!checkBST(n.right))
+			return false;
+		
+		return true;
+	}
+}
+
+package kql.test.practise;
+
+public class TreeNode {
+	int data ;
+	TreeNode left;
+	TreeNode right;
+	public TreeNode(int d){
+		data = d;
+	}
+}
+
+
+
+ // for test
+
+public class CheckBST {
+	
+	public static int last = Integer.MIN_VALUE;
+	public static boolean checkBST(TreeNode n){
+		if(n==null)
+			return true;
+		
+		if(!checkBST(n.left))
+			return false;
+		if(n.data < last)
+			return false;
+		last = n.data;
+		
+		if(!checkBST(n.right))
+			return false;
+		
+		return true;
+	}
+}
+
+
+
+
+
+
+

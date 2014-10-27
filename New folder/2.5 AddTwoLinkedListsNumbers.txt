@@ -1,0 +1,112 @@
+/*
+ * Add to linked list numbers
+ * EXAMPLE
+ * Input: (7-> 1 -> 6) + (5 -> 9 -> 2).That is, 617 + 295.
+ * Output: 2 -> 1 -> 9.That is, 912.
+ * 
+ */
+package kql.test.practise;
+
+
+/*----------class---------------------------*/
+class LinkedListNode {
+	int data = 0;
+	int carrier = 0;
+	LinkedListNode next = null;
+	public LinkedListNode(int d) {
+		data = d;
+	}
+	void appendToTail(int n) {
+		LinkedListNode end = new LinkedListNode(n);
+		LinkedListNode curr = this;
+		while (curr.next != null) {
+			curr = curr.next;
+		}
+		curr.next = end;
+	}
+}
+/*-----add two list-------------------------*/
+public class AddTwoLists {
+	// -------------
+	LinkedListNode addLists(LinkedListNode l1, LinkedListNode l2) {
+		if (l1 == null)
+			return l2;
+		if (l2 == null)
+			return l1;
+		LinkedListNode result = new LinkedListNode(0);
+		LinkedListNode result_runner = result;
+		int len1 = length(l1);
+		int len2 = length(l2);
+		int zeros = 0;
+		if (len1 > len2) {
+			zeros = len1 - len2;
+			appendZeros(l2, zeros);
+		} else if (len1 < len2) {
+			zeros = len2 - len1;
+			appendZeros(l1, zeros);
+		}
+		// add the two numbers together
+		while (l1!= null) {
+//			if (result == null) {
+//			}
+			LinkedListNode newDigit = new LinkedListNode(0);
+			int s = l1.data + l2.data + result_runner.carrier;
+			newDigit.data = s % 10;
+			newDigit.carrier = s / 10;
+			result_runner.next = newDigit;
+			result_runner = newDigit;
+			l1 = l1.next;
+			l2 = l2.next;
+		}
+		if (result_runner.carrier != 0) {
+			LinkedListNode newDigit = new LinkedListNode(result_runner.carrier);
+			result_runner.next = newDigit;
+			result_runner = newDigit;
+		}
+		return result.next;
+	}
+	// -------------
+	void appendZeros(LinkedListNode l, int k) {
+		if (l == null)
+			throw new IllegalArgumentException("list should not be null");
+		while (k != 0) {
+			// LinkedListNode zero = new LinkedListNode(0);
+			l.appendToTail(0);
+			k--;
+		}
+	}
+	// --------------------
+	int length(LinkedListNode l) {
+		if (l == null)
+			return 0;
+		LinkedListNode runner = l;
+		int cnt = 1;
+
+		while (runner.next != null) {
+			runner = runner.next;
+			cnt++;
+		}
+		return cnt;
+	} // end method
+//----for test-----------------------	
+	public static void main(String[] args){
+		LinkedListNode l1 = new LinkedListNode(7);
+		l1.appendToTail(1);
+		l1.appendToTail(7);
+		l1.appendToTail(3);
+		l1.appendToTail(3);
+		LinkedListNode l2 = new LinkedListNode(5);
+		l2.appendToTail(9);
+		l2.appendToTail(2);
+//		LinkedListNode l1 = new LinkedListNode(0);
+//		LinkedListNode l2 = new LinkedListNode(0);
+		AddTwoLists add = new AddTwoLists();
+		LinkedListNode result = add.addLists(l1, l2);
+		LinkedListNode current = result;
+		while(current!=null){
+			System.out.print(current.data+" ");
+			current = current.next;
+		}
+	}
+} // end class
+

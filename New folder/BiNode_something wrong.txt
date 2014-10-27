@@ -1,0 +1,111 @@
+// the code can not produce correct results, since I have designed a wrong algortithm
+
+
+
+class BiNode{
+	public BiNode node1, node2;
+	public int data;
+}
+
+
+public class{
+
+BiNode head = r;while(head != null){head = head.right;}
+// I need to return the head of the linked list, more code..................................
+BiNode r
+
+
+//void bstToLinkedList(BiNode r){
+//if (r==null){return null;}
+//bstToLinkedList(r, null);
+//}
+//}
+
+void bstToLinkedList(BiNode r, BiNode parent){
+if(r==null) { return null; }
+BiNode left = null;
+BiNode right = null;
+
+if(parent == null){
+	r.node1 = r.getPrevious(r, parent);
+	r.node2 = r.getNext(r, parent);
+}
+
+// r != null 
+else{ // parent!= null
+	
+	left = r.node1;
+	right = r.node2;
+	r.node1 = parent.getPrevious(r, parent);
+	r.node2 = parent.getNext(r, parent);
+}
+parent = r;
+bstToLinkedList(left, parent);
+bstToLinkedList(right, parent);
+
+} // end method()
+
+
+BiNode getNext(BiNode n, BiNode parent){/*more code.................*/
+	if(n==null) { return null; }
+	BiNode current = n;
+
+if(parent == null){
+ current = getLeftMost(n.right);
+
+}
+else if(parent!=null){
+	if(current == parent.left){ // n is the left child of parent
+		if(current.right == null){
+			return parent;
+		}
+		else {
+			current = current.right;
+			current = getLeftMost(current);			
+		}
+	}
+	else if(current == parent.right){
+		if(current.right == null){
+			return null;
+		}	
+		else{
+			current = current.right;
+			current = getLeftMost(current);
+		}
+		
+		
+		
+	}
+	
+}
+
+return current;
+}
+
+
+
+BiNode getLeftMost(BiNode n){
+if(n== null) return null;
+	while(n.left!=null){
+		n = n.left;
+	}
+return n;
+}
+
+
+BiNode getPrevious(BiNode n, BiNode parent){
+if(n==null) { return null;}
+if( n.left == null ){return null;}
+BiNode current = n.left;
+while(current.right!=null){
+current = current.right;
+}
+return current;
+}
+
+
+
+public static void main(String[] args){/*more code...........*/}
+
+
+}

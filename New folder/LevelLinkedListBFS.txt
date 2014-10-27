@@ -1,0 +1,160 @@
+package kql.test.practise;
+
+
+/*                30
+ *           /           \
+ *       15                 44
+ *      /                 /    \ 
+ *   7                 37       30
+ *  / \               /  \     /   \ 
+ * 2   9            33   40   47   61  
+
+ * I use breath first search to create linked list
+ * class:
+ *  BFSLevelLinkedList:	public
+ *  TreeNode:	default
+ * 
+ * Instances: 
+ *  levels: an ArrayList<LinkedList<TreeNode>>, store all the levels
+ *  levelList:	LinkedList<TreeNode>, store the nodes in the same level
+ * 
+ *  Method:
+ *   createLevelLinkedList(root): for creating ArrayList<LinkedList<T>>
+ *   main: for test
+ */
+
+/*================this is a good way=====================*/
+
+class CreateLevelList{
+	
+	ArrayList<LinkedList<Node>> levellist = new ArrayList<LinkedList<Node>>();
+
+	void printTree(Node root) {
+		if (root == null)
+			return;
+		LinkedList<Node> level = new LinkedList<Node>();
+		level.add(root);
+		LinkedList<Node> parents = level;
+		while (!parents.isEmpty()) {
+			levellist.add(parents);
+			LinkedList<Node> newlevel = new LinkedList<Node>();
+			for (Node p : parents) {
+				if (p.left != null)
+					newlevel.add(p.left);
+				if (p.right != null)
+					newlevel.add(p.right);
+			}
+			parents = newlevel;
+		}
+	}
+
+}// end class
+
+
+
+
+
+
+/*==================the following way is not pretty=================*/
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+public class BFSLevelLinkedList {
+
+	ArrayList<LinkedList<TreeNode>> levels = new ArrayList<LinkedList<TreeNode>>();
+	LinkedList<TreeNode> levelList = new LinkedList<TreeNode>();
+
+	// --------------------------------------------
+	public void createLevelLinkedList(TreeNode root) {
+		// boundary conditions more code coming.........................
+		if(root == null) {return;}
+
+		levelList = new LinkedList<TreeNode>();
+		levelList.add(root);
+		levels.add(levelList);
+
+		if (root.left != null || root.right != null) {
+
+			levelList = levels.get(levels.size() - 1);
+
+			while (!levelList.isEmpty()) {
+
+				LinkedList<TreeNode> newlevelList = new LinkedList<TreeNode>();
+				levels.add(newlevelList);
+				int i = 0;
+				while (i <= levelList.size() - 1) {
+					TreeNode current = levelList.get(i);
+					if (current.left != null)
+						newlevelList.add(current.left);
+					if (current.right != null)
+						newlevelList.add(current.right);
+					i++;
+				}
+				levelList = levels.get(levels.size() - 1);
+			}
+			// if() is empty....................
+		}
+
+	}
+
+	// ---------for test----------------------------------
+	public static void main(String[] args) {
+
+		// create a tree for test
+		// TreeNode r = null;
+		TreeNode r = new TreeNode(30);
+		r.left = new TreeNode(15);
+		r.right = new TreeNode(44);
+		r.left.left = new TreeNode(7);
+		// r.left.right = new TreeNode(23);
+		r.right.left = new TreeNode(37);
+		r.right.right = new TreeNode(30);
+		r.left.left.left = new TreeNode(2);
+		r.left.left.right = new TreeNode(9);
+		// r.left.right.left = new TreeNode(19);
+		// r.left.right.right = new TreeNode(27);
+		r.right.left.left = new TreeNode(33);
+		r.right.left.right = new TreeNode(40);
+		r.right.right.left = new TreeNode(47);
+		r.right.right.right = new TreeNode(61);
+		// ----created tree, end----
+		BFSLevelLinkedList lll = new BFSLevelLinkedList();
+		lll.createLevelLinkedList(r);
+
+		for (LinkedList<TreeNode> ll : lll.levels) {
+			System.out.print("\n");
+			for (TreeNode node : ll) {
+				System.out.print(" " + node.getData() + ", ");
+			}
+		}
+
+	} // end main
+
+} // end class
+
+class TreeNode {
+	private int data = 0;
+	private int level = 0;
+	TreeNode left = null;
+	TreeNode right = null;
+
+	public TreeNode(int d) {
+		data = d;
+	}
+
+	void setData(int d) { // no use
+		data = d;
+	}
+
+	int getData() { // no use
+		return data;
+	}
+
+	void setLevel(int l) { // no use
+		level = l;
+	}
+
+	int getLevel() { // no use
+		return level;
+	}
+}

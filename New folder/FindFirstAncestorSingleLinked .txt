@@ -1,0 +1,102 @@
+package kql.test.practise;
+
+//tree is single linked
+/*                30				
+ *           /           \								
+ *       15                 44							
+ *      /  \              /    \ 						
+ *   7      23         37       30						
+ *  / \    /  \       /  \     /   \ 			
+ * 2   9  19   27    33   40  47   61  		
+ * ..........................................................
+ * Instances: 
+ *  ancestor: 	if the first common ancestor of node n1 and n2.
+ * Methods:
+ *	findAncestor(root, n1, n2):	return the first common ancestor of n1 and n2
+ *								if root==null return null.
+ *	cover(TreeNode root, TreeNode node):	if node is in the tree root return true, else return false
+ *											if node is null return true, else return false
+ *											if n1 or n2 is root, return root
+ */
+
+public class FindFirstAncestorSingle {
+	TreeNode ancestor = new TreeNode(0);
+	TreeNode findAncestor(TreeNode root, TreeNode n1, TreeNode n2) {
+		// base condition and boundary condition
+		if (cover(root, n1) && cover(root, n2) == false) { //if n1 and n2 not in the tree, return null
+			return null;
+		} else {
+			ancestor = root;//n1 and n2 in the same tree, ancestor = root
+		}
+		if (root == null) {
+			return null;
+		}
+		if (root.equals(n1) || root.equals(n2)) {
+			return root;
+		}
+		
+		// left of root
+		if (cover(root.left, n1) && cover(root.left, n2)) {
+			ancestor = findAncestor(root.left, n1, n2);
+		}
+		// right of root
+		else if (cover(root.right, n1) && cover(root.right, n2)) {
+			ancestor = findAncestor(root.right, n1, n2);
+		}
+		return ancestor;
+	}
+
+	// ----------------------
+	boolean cover(TreeNode root, TreeNode node) {
+		if (root == null ) {
+			return false;
+		}
+		if(node == null){
+			return true;
+		}
+		if (root.equals(node)) {
+			return true;
+		}
+		return cover(root.left, node) || cover(root.right, node);
+	}
+
+	// ------for test--------------------------------
+
+	public static void main(String[] args) {
+		FindFirstAncestorSingle ffas = new FindFirstAncestorSingle();
+		//-----create a tree for test------
+		// TreeNode r = null;
+		TreeNode r = new TreeNode(30);
+		r.left = new TreeNode(15);
+		r.right = new TreeNode(44);
+		r.left.left = new TreeNode(7);
+		r.left.right = new TreeNode(23);
+		r.right.left = new TreeNode(37);
+		r.right.right = new TreeNode(30);
+		r.left.left.left = new TreeNode(2);
+		r.left.left.right = new TreeNode(9);
+		r.left.right.left = new TreeNode(19);
+		r.left.right.right = new TreeNode(27);
+		r.right.left.left = new TreeNode(33);
+		r.right.left.right = new TreeNode(40);
+		r.right.right.left = new TreeNode(47);
+		r.right.right.right = new TreeNode(61);
+		// -------created tree, end-------
+		TreeNode n1 = null;//r.left.right.right;
+		TreeNode n2 = r.left.right.left;
+		TreeNode result = ffas.findAncestor(r, n1, n2);
+		System.out.println("The first common ancestor: "+result.data);
+		
+	}
+} // end class
+
+class TreeNode {
+	int data = 0;
+	TreeNode left = null;
+	TreeNode right = null;
+
+	public TreeNode(int d) {
+		data = d;
+	}
+} // end class
+

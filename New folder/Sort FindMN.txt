@@ -1,0 +1,78 @@
+package com.test2.kql;
+
+/* Given an array of integers, write a method to find indices m and n such that if you
+ * sorted elements m through n, the entire array would be sorted. Minimize n - m
+ * (that is, find the smallest such sequence).
+ * EXAMPLE
+ * Input: 1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19
+ * Output: (3, 9
+ */
+public class Sort {
+
+	public void sort(int[] arr) {
+		if (arr == null || arr.length == 0)
+			return;
+
+		int leftEnd = getLeftEnd(arr); // .............
+		int rightStart = getRightStart(arr); // ...............
+		int m = -1, n = -1;
+		// get max and min
+		if (leftEnd >= arr.length)
+			return;
+
+		int min = leftEnd + 1, max = rightStart - 1;
+		for (int i = leftEnd; i <= rightStart; i++) {
+			if (arr[i] < arr[min]) {
+				min = i;
+			}
+			if (arr[i] > arr[max]) {
+				max = i;
+			}
+		}
+
+		// 0 to leftEnd, rightStart to array.size()-1
+		for (int i = leftEnd; i >= 0; i--) {
+			if (arr[i] > arr[min]) {
+				m = i;
+			}
+		}
+		for (int i = rightStart; i < arr.length; i++) {
+			if (arr[i] < arr[max]) {
+				n = i;
+			}
+
+		}
+		System.out.println("m = " + m + ", n = " + n);
+
+	}
+
+	int getLeftEnd(int[] arr) {
+		if (arr != null && arr.length != 0) {
+			for (int i = 0; i < arr.length - 1; i++) {
+				if (arr[i] > arr[i + 1]) {
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+
+	int getRightStart(int[] arr) {
+
+		if (arr != null && arr.length != 0) {
+			for (int i = arr.length - 1; i > 0; i--) {
+				if (arr[i] < arr[i - 1]) {
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+
+	/* -------------for test------------ */
+	public static void main(String[] args) {
+		Sort st = new Sort();
+		int[] array = { 1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19 };
+		st.sort(array);
+	}
+}

@@ -1,0 +1,57 @@
+package com.test2.kql;
+
+import java.util.ArrayList;
+/* Design an algorithm to find all pairs of integers within an array which sum to a specified value
+ * 
+ */
+import java.util.Arrays;
+import java.util.LinkedList;
+
+public class GetPairs {
+	// sort the array first
+
+	ArrayList<LinkedList<Integer>> getPairs(int[] array, int sum) {
+		if (array == null || array.length == 0)
+			return null;
+		Arrays.sort(array);
+		ArrayList<LinkedList<Integer>> list = new ArrayList<LinkedList<Integer>>();
+		LinkedList<Integer> ll = null;
+		int front = 0;
+		int last = array.length - 1;
+
+		while (front < last) {
+			int s = array[front] + array[last];
+			if (sum == s) {
+				ll = new LinkedList<Integer>();
+				ll.add(array[front]);
+				ll.add(array[last]);
+				list.add(ll); 
+				front++; 
+				last--;
+			} else if (s > sum) {
+				last--;
+			} else if (s < sum) {
+				front++;
+			}
+		}
+		return list;
+	} // end class
+
+	/*-------for test----------------*/
+
+	public static void main(String[] args) {
+		int[] array = { -1, 14, 9, 6, 7, 5, 3, 0, -2, 13 };
+		int sum = 18;
+		GetPairs gp = new GetPairs();
+		ArrayList<LinkedList<Integer>> list = gp.getPairs(array, sum);
+		// Iterato
+		for (LinkedList<Integer> ll : list) {
+			for (Integer i : ll) {
+				System.out.print(i + " ");
+			}
+			System.out.println();
+		}
+
+	}
+
+}

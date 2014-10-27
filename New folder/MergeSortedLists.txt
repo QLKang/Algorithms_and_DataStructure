@@ -1,0 +1,86 @@
+package org.leetcode.test;
+
+/*
+ * Input: list1: 5 7 9 11, list2: 1 4 10 12
+ * Output: 1 4 5 7 9 10 11 12
+ * Two ways: 1. recursive way to merge, 2.  use pointers to merge
+ */
+class Solution {
+
+	// ---------recursive way to merge---------------
+	ListNode mergeLists(ListNode list1, ListNode list2) {
+		if (list1 == null)
+			return list2;
+		if (list2 == null)
+			return list1;
+
+		if (list1.data < list2.data) {
+			list1.next = mergeLists(list1.next, list2);
+			return list1;
+		} else {
+			list2.next = mergeLists(list2.next, list1);
+			return list2;
+		}
+	}
+
+	// ---use pointers to merge----------------------
+	ListNode merge(ListNode list1, ListNode list2) {
+		if (list1 == null)
+			return list2;
+		if (list2 == null)
+			return list1;
+
+		ListNode head;
+		if (list1.data < list2.data) {
+			head = list1;
+		} else {
+			head = list2;
+			list2 = list1;
+			list1 = head;
+		}
+		while (list1.next != null && list2 != null) {
+			if (list1.next.data <= list2.data) {
+				list1 = list1.next;
+			} else {
+				ListNode tmp = list1.next;
+				list1.next = list2;
+				list2 = tmp;
+			}
+		}
+		if (list1.next == null)
+			list1.next = list2;
+		return head;
+	} // end merge
+} // end class
+
+class ListNode {
+	int data;
+	ListNode next;
+
+	public ListNode(int d) {
+		data = d;
+	}
+}
+
+/*-----for test-------*/
+public class TestII {
+	public static void main(String[] args) {
+		Solution sol = new Solution();
+		ListNode list1 = new ListNode(5);
+		list1.next = new ListNode(7);
+		list1.next.next = new ListNode(9);
+		list1.next.next.next = new ListNode(11);
+		// ListNode list1 = null; ListNode list2 = null;
+		ListNode list2 = new ListNode(1);
+		list2.next = new ListNode(4);
+		list2.next.next = new ListNode(10);
+		list2.next.next.next = new ListNode(12);
+
+		ListNode rlt = sol.mergeLists(list1, list2);
+		ListNode curr = rlt;
+		while (curr != null) {
+			System.out.print(curr.data + " ");
+			curr = curr.next;
+		}
+	}
+}
