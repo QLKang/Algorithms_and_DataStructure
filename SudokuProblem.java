@@ -6,7 +6,7 @@ Sudoku, originally called Number Place,[1] is a logic-based,[2][3] combinatorial
 */
 
 
-class Solution {
+class SudokuProblem {
 	public void solveSudoku(char[][] board) {
 		if (board == null || board.length == 0 || board[0].length == 0) {
 			return;
@@ -92,7 +92,7 @@ class Solution {
 /*----for test, we suppose the items are Integer----*/
 public class TestII {
 	public static void main(String[] args) {
-		Solution sol = new Solution();
+		SudokuProblem sol = new SudokuProblem();
 		char[][] B = { 
 				{ '5', '3', '.', '.', '7', '.', '.', '.', '.' },
 				{ '6', '.', '.', '1', '9', '5', '.', '.', '.' },
